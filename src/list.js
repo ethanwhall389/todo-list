@@ -24,6 +24,10 @@ class List {
         return this.ventures;
     }
 
+    getVentureName (index) {
+        return this.ventures[index].ventureName;
+    }
+
     getTasks (ventureIndex) {
         return this.ventures[ventureIndex].tasks;
     }

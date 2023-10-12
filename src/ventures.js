@@ -1,7 +1,7 @@
 export class Venture {
     constructor(ventureName) {
         this.ventureName = ventureName,
-        this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        this.tasks = [];
 
     }
 

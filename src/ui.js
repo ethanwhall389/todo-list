@@ -19,24 +19,32 @@ export default class UI {
 
         const ventureTasks = List.getTasks(ventureIndex);
 
-        for (let i = 0; i < ventureTasks.length; i++) {
-            const taskRow = document.createElement('div');
-            taskRow.classList.add('task-row');
-            const listItem = document.createElement('li');
-            listItem.textContent = ventureTasks[i].name;
-            listItem.setAttribute('task-index', i);
-            if (ventureTasks[i].checked === true) {
-                listItem.classList.add('checked');
+        if (ventureTasks.length >= 1) {
+            for (let i = 0; i < ventureTasks.length; i++) {
+                const taskRow = document.createElement('div');
+                taskRow.classList.add('task-row');
+                const listItem = document.createElement('li');
+                listItem.textContent = ventureTasks[i].name;
+                listItem.setAttribute('task-index', i);
+                if (ventureTasks[i].checked === true) {
+                    listItem.classList.add('checked');
+                }
+                
+                const deleteIcon = document.createElement('img');
+                deleteIcon.setAttribute('src', './images/delete-task.svg');
+                deleteIcon.setAttribute('task-index', i);
+                deleteIcon.classList.add('delete-icon');
+                
+                taskRow.append(listItem, deleteIcon);
+                listContainer.appendChild(taskRow);
             }
-            
-            const deleteIcon = document.createElement('img');
-            deleteIcon.setAttribute('src', './images/delete-task.svg');
-            deleteIcon.setAttribute('task-index', i);
-            deleteIcon.classList.add('delete-icon');
-            
-            taskRow.append(listItem, deleteIcon);
-            listContainer.appendChild(taskRow);
+        } else {
+            const noTasksMessage = document.createElement('p');
+            const currentVentureName = List.getVentureName(ventureIndex);
+            noTasksMessage.textContent = `${currentVentureName} has no tasks`;
+            listContainer.appendChild(noTasksMessage);
         }
+
        
     }
 
@@ -71,9 +79,13 @@ export default class UI {
     static addVenture (ventureName) {
         List.addVenture(ventureName);
         const newOption = document.createElement('option');
+        
+        UI.loadVenture(ventureName);
+        
         newOption.setAttribute('value', ventureName);
         newOption.textContent = ventureName;
         ventureSelector.appendChild(newOption);
+        ventureSelector.value = ventureName;
     }
 }
 
@@ -132,9 +144,9 @@ ventureSelector.addEventListener('change', () => {
     if (ventureSelector.value === 'Create New Venture') {
         const newVentureName = prompt("What would you like your venture called?");
         UI.addVenture(newVentureName);
+    } else {
+        UI.loadVenture(ventureSelector.value);
     }
-    console.log(ventureSelector.value);
-    UI.loadVenture(ventureSelector.value);
 })
 
 

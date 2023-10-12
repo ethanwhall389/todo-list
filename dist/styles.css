@@ -18,6 +18,7 @@
 }
 
 .app-container {
+    position: relative;
     width: 100%;
     max-width: 600px;
     background-color: white;
@@ -67,6 +68,42 @@
     justify-content: center;
 }
 
+#create-venture-option {
+    font-weight: bold;
+}
+
+/* Add venture lightbox */
+.modal-container {
+    position: absolute;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background: #5555553d;
+    backdrop-filter: blur(2px);
+}
+
+.add-venture-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-venture {
+    position: absolute;
+    z-index: 2;
+    max-width: 450px;
+    padding: 0 30px;
+    height: 100px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+
 .add-task-row {
     display: flex;
     align-items: center;
@@ -76,6 +113,7 @@
     padding-left: 20px;
     margin-bottom: 25px;
     height: 60px;
+    position: relative;
 }
 
 #input-box {
@@ -112,6 +150,7 @@
     justify-content: space-between;
     transition: 100ms;
     border-radius: 30px;
+    position: relative;
 }
 
 ul li {

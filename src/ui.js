@@ -10,14 +10,14 @@ const ventureSelector = document.querySelector('.select-box');
 export default class UI {
     static loadPage() {
         List.addVenture('Test Venture');
-        const ventureIndex = List.findVentureIndex('Demo Venture');
-        UI.loadTasks(ventureIndex);
+        UI.loadVenture('Demo Venture');
     }
 
     
     static loadTasks (ventureIndex) {
 
         const ventureTasks = List.getTasks(ventureIndex);
+
 
         if (ventureTasks.length >= 1) {
             for (let i = 0; i < ventureTasks.length; i++) {
@@ -51,6 +51,7 @@ export default class UI {
     static loadVenture (ventureName) {
         const ventureIndex = List.findVentureIndex(ventureName);
         UI.updatePage(ventureIndex);
+        ventureSelector.value = ventureName;
     }
 
 
@@ -80,12 +81,13 @@ export default class UI {
         List.addVenture(ventureName);
         const newOption = document.createElement('option');
         
-        UI.loadVenture(ventureName);
-        
         newOption.setAttribute('value', ventureName);
         newOption.textContent = ventureName;
         ventureSelector.appendChild(newOption);
-        ventureSelector.value = ventureName;
+        
+        UI.loadVenture(ventureName);
+        
+
     }
 }
 

@@ -72,13 +72,14 @@
     font-weight: bold;
 }
 
-/* Add venture lightbox */
+/* Add venture modal */
 .modal-container {
+    display: none;
     position: absolute;
     z-index: 1;
     width: 100vw;
     height: 100vh;
-    background: #5555553d;
+    background: #55555557;
     backdrop-filter: blur(2px);
 }
 
@@ -87,21 +88,47 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .add-venture {
     position: absolute;
+    top: 20px;
     z-index: 2;
-    max-width: 450px;
+    width: 500px;
     padding: 0 30px;
-    height: 100px;
+    height: 200px;
     background: #fff;
     display: flex;
+    gap: 10px;
     justify-content: center;
     align-items: center;
-    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
+}
+
+.modal-input-container {
+    display: flex;
+    gap: 15px;
+}
+
+.add-venture input {
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    background-color: #edeef0;
+    height: 50px;
+    padding: 0 20px;
+    font-size: 15px;
+}
+
+.add-venture button {
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    background: #ff5945;
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 15px;
 }
 
 .add-task-row {
@@ -232,6 +259,9 @@ li:hover::after {
     color: #edeef0;
 }
 
+
+
+
 @media (max-width: 490px) {
     .app-container {
         height: 100%;
@@ -269,6 +299,26 @@ li:hover::after {
 
     #add-task-bttn {
         margin: 5px 0 25px; 
+    }
+
+    .add-venture {
+        width: 90%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-input-container {
+        flex-direction: column;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 20px
+    }
+
+    .modal-input-container button {
+        width: 70%;
+        font-size: 17px;
     }
 
     #list-container {

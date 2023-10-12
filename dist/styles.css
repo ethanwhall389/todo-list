@@ -8,6 +8,9 @@
 }
 
 .container-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
     height: 100vh;
     background: linear-gradient(135deg, #153677, #4e085f);
@@ -18,7 +21,7 @@
     width: 100%;
     max-width: 600px;
     background-color: white;
-    margin: 100px auto 20px;
+    margin: 50px auto 20px;
     padding: 40px 30px 70px;
     border-radius: 10px;
 }
@@ -36,6 +39,7 @@
     border-radius: 30px;
     padding-left: 20px;
     margin-bottom: 25px;
+    height: 60px;
 }
 
 #input-box {
@@ -55,6 +59,16 @@
     font-size: 16px;
     cursor: pointer;
     border-radius: 40px;
+}
+
+#add-task-bttn:hover {
+    background: #f25240;
+}
+
+#add-task-bttn:active {
+    background: #f25240;
+    padding: 12px 46px;
+    margin-right: 4px;
 }
 
 .task-row {
@@ -126,4 +140,65 @@ li:hover::after {
 
 .task-row:hover {
     background-color: #edeef0;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0 10px 0;
+}
+
+.footer p {
+    color: #edeef0;
+}
+
+.footer a {
+    color: #edeef0;
+}
+
+@media (max-width: 490px) {
+    .app-container {
+        height: 100%;
+        padding-bottom: 20px;
+        margin: 0;
+    }
+
+    .add-task-row {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background: #edeef0;
+        border-radius: 30px;
+        padding-left: 25px;
+        padding-top: 13px;
+        height: 60px;
+    }
+
+    #input-box {
+        font-size: 15px;
+    }
+
+    #add-task-bttn {
+        margin: 5px 0 25px; 
+    }
+
+    #list-container {
+        margin-top: 70px;
+    }
+
+    .app-title {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .delete-icon {
+        opacity: 0.4;
+    }
+
+    .delete-icon:active {
+        opacity: 1;
+    }
 }

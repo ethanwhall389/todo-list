@@ -1,4 +1,3 @@
-import DefaultVenture from './ventures.js';
 import List from './list.js';
 
 const taskInput = document.querySelector('#input-box');
@@ -6,11 +5,24 @@ const addTaskBttn = document.querySelector('#add-task-bttn');
 const listContainer = document.querySelector('#list-container');
 const deleteIcon = document.querySelector('.delete-icon');
 const ventureSelector = document.querySelector('.select-box');
+const modalContainer = document.querySelector('.modal-container');
+const newVentureInput = document.querySelector('#venture-input-box');
+const addVentureBttn = document.querySelector('#add-venture-bttn');
+
+let currentSelectedVenture;
 
 export default class UI {
     static loadPage() {
-        List.addVenture('Test Venture');
-        UI.loadVenture('Demo Venture');
+        if (localStorage.length > 0) {
+            List.setVentures(JSON.parse(localStorage.getItem('ventures')));
+            UI.loadVenture(localStorage.getItem('selectedVenture'));
+        } else {
+            List.addVenture('Demo Venture');
+            UI.addVenture('Demo Venture');
+            UI.addTask('Wash clothes');
+            UI.addTask('Take shower');
+            UI.addTask('Read book');
+        }
     }
 
     
@@ -52,12 +64,15 @@ export default class UI {
         const ventureIndex = List.findVentureIndex(ventureName);
         UI.updatePage(ventureIndex);
         ventureSelector.value = ventureName;
+        currentSelectedVenture = ventureName;
+        localStorage.setItem('selectedVenture', currentSelectedVenture);
+
     }
 
 
     static updatePage (ventureIndex) {
         listContainer.textContent = '';
-        localStorage.setItem('tasks', JSON.stringify(DefaultVenture.getTasks()));
+        localStorage.setItem('ventures', JSON.stringify(List.getVentures()));
         UI.loadTasks(ventureIndex);
     }
 
@@ -67,14 +82,15 @@ export default class UI {
     }
 
     static addTask (taskName) {
-        const CurrentVentureIndex = UI.getSelectedVentureIndex();
-        List.addTask(CurrentVentureIndex, taskName);
-        UI.updatePage(CurrentVentureIndex);
+        const currentVentureIndex = UI.getSelectedVentureIndex();
+        List.addTask(currentVentureIndex, taskName);
+        UI.updatePage(currentVentureIndex);
     }
 
     static removeTask (taskIndex) {
-        DefaultVenture.removeTask(taskIndex);
-        UI.updatePage();
+        const currentVentureIndex = UI.getSelectedVentureIndex();
+        List.removeTask(currentVentureIndex, taskIndex);
+        UI.updatePage(currentVentureIndex);
     }
 
     static addVenture (ventureName) {
@@ -84,10 +100,16 @@ export default class UI {
         newOption.setAttribute('value', ventureName);
         newOption.textContent = ventureName;
         ventureSelector.appendChild(newOption);
-        
-        UI.loadVenture(ventureName);
-        
 
+        UI.loadVenture(ventureName);
+    }
+
+    static displayModal () {
+        modalContainer.style.display = 'block';
+    }
+
+    static hideModal () {
+        modalContainer.style.display = 'none';
     }
 }
 
@@ -127,15 +149,16 @@ listContainer.addEventListener('click', (event) => {
 //Checking off a task
 listContainer.addEventListener('click', (event) => {
     const taskIndex = event.target.getAttribute('task-index');
+    const ventureIndex = UI.getSelectedVentureIndex();
     if (event.target.localName === 'li') {
         if (event.target.classList.contains('checked')) {
             event.target.classList.remove('checked');
-            DefaultVenture.removeChecked(taskIndex);
-            UI.updatePage();
+            List.removeChecked(ventureIndex, taskIndex);
+            UI.updatePage(ventureIndex);
         } else {
             event.target.classList.add('checked');
-            DefaultVenture.addChecked(taskIndex);
-            UI.updatePage();
+            List.addChecked(ventureIndex, taskIndex);
+            UI.updatePage(ventureIndex);
         }
     }
 })
@@ -144,12 +167,30 @@ listContainer.addEventListener('click', (event) => {
 //Adding a venture
 ventureSelector.addEventListener('change', () => {
     if (ventureSelector.value === 'Create New Venture') {
-        const newVentureName = prompt("What would you like your venture called?");
-        UI.addVenture(newVentureName);
+        // const newVentureName = prompt("What would you like your venture called?");
+        UI.displayModal();
+        ventureSelector.value = currentSelectedVenture;
     } else {
         UI.loadVenture(ventureSelector.value);
     }
 })
+
+addVentureBttn.addEventListener('click', () => {
+    console.log('add venture bttn clicked');
+    if (newVentureInput.value !== '') {
+        UI.addVenture(newVentureInput.value);
+        UI.hideModal();
+    } else {
+        return
+    }
+})
+
+// //Close modal by clicking outside it.
+// modalContainer.addEventListener('click', (event) => {
+//     UI.hideModal();
+// });
+
+
 
 
 

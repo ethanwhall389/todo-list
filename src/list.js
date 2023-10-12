@@ -17,7 +17,11 @@ import { Venture } from "./ventures";
 
 class List {
     constructor () {
-        this.ventures = [{ventureName: 'Demo Venture', tasks: [{name: 'Task01', checked: false}]}];
+        this.ventures = [];
+    }
+
+    setVentures (ventures) {
+        this.ventures = ventures;
     }
 
     getVentures () {
@@ -53,6 +57,14 @@ class List {
 
     addVenture (ventureName) {
         this.ventures.push(new Venture(ventureName));
+    }
+
+    removeChecked (ventureIndex, taskIndex) {
+        this.ventures[ventureIndex].tasks[taskIndex].checked = false;
+    }
+    
+    addChecked (ventureIndex, taskIndex) {
+        this.ventures[ventureIndex].tasks[taskIndex].checked = true;
     }
 }
 

@@ -26,9 +26,45 @@
     border-radius: 10px;
 }
 
+.title-container {
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
 .app-title {
     color: #002765;
-    margin-bottom: 15px;
+}
+
+/* Select box */
+
+.select-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    min-width: 200px;
+    height: 50px;
+}
+
+.select-box {
+    border: none;
+    border-radius: 30px;
+    appearance: none;
+    padding: 0 18px 0 18px;
+    width: 100%;
+    color: white;
+    background-color: #002765;
+    font-size: 15px;
+}
+
+.select-container .icon-container {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-task-row {
@@ -162,6 +198,17 @@ li:hover::after {
         height: 100%;
         padding-bottom: 20px;
         margin: 0;
+    }
+
+    .title-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        justify-content: space-between;
+    }
+
+    .select-container {
+        margin-top: 10px;
     }
 
     .add-task-row {

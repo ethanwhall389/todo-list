@@ -10,7 +10,20 @@
 <body>
     <div class="container-main">
         <div class="app-container">
-            <h1 class="app-title">Venture ToDo List</h1>
+            <div class="title-container">
+                <h1 class="app-title">Venture ToDo List</h1>
+                <div class="select-container">
+                    <select class="select-box">
+                        <option value="">Select a Venture</option>
+                        <option value="Demo Venture">Demo Venture</option>
+                        <option value="Test Venture">Test Venture</option>
+                        <option value="">Create New Venture</option>
+                    </select>
+                    <div class="icon-container">
+                        <img src="./images/caret-down.svg" alt="caret-down">
+                    </div>
+                </div>
+            </div>
             <div class="add-task-row">
                 <input type="text" id="input-box" placeholder="What do you need to get done?">
                 <button id="add-task-bttn">Add</button>

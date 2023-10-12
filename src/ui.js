@@ -1,24 +1,31 @@
-import DefaultList from './list.js';
+import DefaultVenture from './ventures.js';
+import List from './list.js';
 
 const taskInput = document.querySelector('#input-box');
 const addTaskBttn = document.querySelector('#add-task-bttn');
 const listContainer = document.querySelector('#list-container');
 const deleteIcon = document.querySelector('.delete-icon');
+const ventureSelector = document.querySelector('.select-box');
 
 export default class UI {
     static loadPage() {
-        UI.loadTasks();
+        List.addVenture('Test Venture');
+        const ventureIndex = List.findVentureIndex('Demo Venture');
+        UI.loadTasks(ventureIndex);
     }
 
-    static loadTasks () {
-        const tasks = DefaultList.getTasks();
-        for (let i = 0; i < tasks.length; i++) {
+    
+    static loadTasks (ventureIndex) {
+
+        const ventureTasks = List.getTasks(ventureIndex);
+
+        for (let i = 0; i < ventureTasks.length; i++) {
             const taskRow = document.createElement('div');
             taskRow.classList.add('task-row');
             const listItem = document.createElement('li');
-            listItem.textContent = tasks[i].name;
+            listItem.textContent = ventureTasks[i].name;
             listItem.setAttribute('task-index', i);
-            if (tasks[i].checked === true) {
+            if (ventureTasks[i].checked === true) {
                 listItem.classList.add('checked');
             }
             
@@ -30,38 +37,43 @@ export default class UI {
             taskRow.append(listItem, deleteIcon);
             listContainer.appendChild(taskRow);
         }
-        // DefaultList.getTasks().forEach((element) => {
-        //     console.log(element);
-        //     const taskRow = document.createElement('div');
-        //     taskRow.classList.add('task-row');
-        //     taskRow.setAttribute('data', )
-        //     const listItem = document.createElement('li');
-        //     listItem.textContent = element;
-            
-        //     const deleteIcon = document.createElement('img');
-        //     deleteIcon.setAttribute('src', './images/delete-task.svg');
-        //     deleteIcon.classList.add('delete-icon');
-            
-        //     taskRow.append(listItem, deleteIcon);
-        //     listContainer.appendChild(taskRow);
-            
-        // })
+       
     }
 
-    static updatePage () {
+    static loadVenture (ventureName) {
+        const ventureIndex = List.findVentureIndex(ventureName);
+        UI.updatePage(ventureIndex);
+    }
+
+
+    static updatePage (ventureIndex) {
         listContainer.textContent = '';
-        localStorage.setItem('tasks', JSON.stringify(DefaultList.getTasks()));
-        UI.loadTasks();
+        localStorage.setItem('tasks', JSON.stringify(DefaultVenture.getTasks()));
+        UI.loadTasks(ventureIndex);
+    }
+
+    static getSelectedVentureIndex () {
+        const name = ventureSelector.value;
+        return List.findVentureIndex(name);
     }
 
     static addTask (taskName) {
-        DefaultList.addTask(taskName);
-        UI.updatePage();
+        const CurrentVentureIndex = UI.getSelectedVentureIndex();
+        List.addTask(CurrentVentureIndex, taskName);
+        UI.updatePage(CurrentVentureIndex);
     }
 
     static removeTask (taskIndex) {
-        DefaultList.removeTask(taskIndex);
+        DefaultVenture.removeTask(taskIndex);
         UI.updatePage();
+    }
+
+    static addVenture (ventureName) {
+        List.addVenture(ventureName);
+        const newOption = document.createElement('option');
+        newOption.setAttribute('value', ventureName);
+        newOption.textContent = ventureName;
+        ventureSelector.appendChild(newOption);
     }
 }
 
@@ -104,14 +116,25 @@ listContainer.addEventListener('click', (event) => {
     if (event.target.localName === 'li') {
         if (event.target.classList.contains('checked')) {
             event.target.classList.remove('checked');
-            DefaultList.removeChecked(taskIndex);
+            DefaultVenture.removeChecked(taskIndex);
             UI.updatePage();
         } else {
             event.target.classList.add('checked');
-            DefaultList.addChecked(taskIndex);
+            DefaultVenture.addChecked(taskIndex);
             UI.updatePage();
         }
     }
+})
+
+
+//Adding a venture
+ventureSelector.addEventListener('change', () => {
+    if (ventureSelector.value === 'Create New Venture') {
+        const newVentureName = prompt("What would you like your venture called?");
+        UI.addVenture(newVentureName);
+    }
+    console.log(ventureSelector.value);
+    UI.loadVenture(ventureSelector.value);
 })
 
 

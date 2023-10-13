@@ -19,11 +19,14 @@
 
 .app-container {
     position: relative;
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    min-height: 300px;
     max-width: 600px;
     background-color: white;
     margin: 50px auto 20px;
-    padding: 40px 30px 70px;
+    padding: 40px 30px 20px;
     border-radius: 10px;
 }
 
@@ -31,6 +34,10 @@
     display: flex;
     margin-bottom: 15px;
     justify-content: space-between;
+}
+
+#list-container {
+    flex: 1;
 }
 
 .app-title {
@@ -242,6 +249,20 @@ li:hover::after {
 
 .task-row:hover {
     background-color: #edeef0;
+}
+
+.delete-venture-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.delete-venture-bttn {
+    margin-top: 20px;
+    width: 200px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 15px;
 }
 
 .footer {

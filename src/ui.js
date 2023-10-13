@@ -1,3 +1,4 @@
+import list from './list.js';
 import List from './list.js';
 
 const taskInput = document.querySelector('#input-box');
@@ -15,7 +16,7 @@ export default class UI {
     static loadPage() {
         if (localStorage.length > 0) {
             List.setVentures(JSON.parse(localStorage.getItem('ventures')));
-            UI.loadVenture(localStorage.getItem('selectedVenture'));
+            UI.loadVenture(JSON.parse(localStorage.getItem('selectedVenture')));
         } else {
             List.addVenture('Demo Venture');
             UI.addVenture('Demo Venture');
@@ -65,7 +66,7 @@ export default class UI {
         UI.updatePage(ventureIndex);
         ventureSelector.value = ventureName;
         currentSelectedVenture = ventureName;
-        localStorage.setItem('selectedVenture', currentSelectedVenture);
+        localStorage.setItem('selectedVenture', JSON.stringify(currentSelectedVenture));
 
     }
 
@@ -74,6 +75,20 @@ export default class UI {
         listContainer.textContent = '';
         localStorage.setItem('ventures', JSON.stringify(List.getVentures()));
         UI.loadTasks(ventureIndex);
+        UI.loadVentureList();
+    }
+
+    static loadVentureList () {
+        const venturesArray = List.getVentures();
+        venturesArray.forEach( (venture) => {
+            const ventureName = venture.ventureName;
+            
+            const newOption = document.createElement('option');
+            newOption.setAttribute('value', ventureName);
+            newOption.textContent = ventureName;
+            ventureSelector.appendChild(newOption);
+
+        })
     }
 
     static getSelectedVentureIndex () {
@@ -97,9 +112,7 @@ export default class UI {
         List.addVenture(ventureName);
         const newOption = document.createElement('option');
         
-        newOption.setAttribute('value', ventureName);
-        newOption.textContent = ventureName;
-        ventureSelector.appendChild(newOption);
+        UI.loadVentureList();
 
         UI.loadVenture(ventureName);
     }

@@ -10,6 +10,8 @@ const ventureOptions = document.querySelector('.dynamic-options');
 const modalContainer = document.querySelector('.modal-container');
 const newVentureInput = document.querySelector('#venture-input-box');
 const addVentureBttn = document.querySelector('#add-venture-bttn');
+const deleteVentureBttn = document.querySelector('.delete-venture-bttn');
+const errorMessageContainer = document.querySelector('.error-message-container');
 
 let currentSelectedVenture;
 
@@ -74,8 +76,8 @@ export default class UI {
     static updatePage (ventureIndex) {
         listContainer.textContent = '';
         localStorage.setItem('ventures', JSON.stringify(List.getVentures()));
-        UI.loadTasks(ventureIndex);
         UI.loadVentureList();
+        UI.loadTasks(ventureIndex);
     }
 
     static loadVentureList () {
@@ -122,6 +124,32 @@ export default class UI {
         List.addVenture(ventureName);
         UI.loadVenture(ventureName);
     }
+
+    static showErrorMessage (message) {
+        const errorMessage = document.createElement('p');
+        errorMessage.textContent = message;
+        errorMessageContainer.appendChild(errorMessage);
+
+        setTimeout(function() {
+            errorMessage.remove();
+        }, 3000)
+    }
+
+    static deleteVenture () {
+        const ventureIndex = UI.getSelectedVentureIndex();
+        
+        const venturesArray = List.getVentures();
+        if (venturesArray.length >= 2) {
+            List.removeVenture(ventureIndex);
+            const newVentureArray = List.getVentures();
+            const lastIndex = newVentureArray.length - 1;
+            const lastVentureName = newVentureArray[lastIndex].ventureName;
+            UI.loadVenture(lastVentureName);
+        } else {
+            UI.showErrorMessage('You must have at least one venture');
+            return;
+        }
+    } 
 
     static displayModal () {
         modalContainer.style.display = 'block';
@@ -208,6 +236,9 @@ addVentureBttn.addEventListener('click', () => {
 // modalContainer.addEventListener('click', (event) => {
 //     UI.hideModal();
 // });
+
+// deleting a venture
+deleteVentureBttn.addEventListener('click', () => UI.deleteVenture());
 
 
 

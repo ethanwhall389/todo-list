@@ -59,6 +59,10 @@ class List {
         this.ventures.push(new Venture(ventureName));
     }
 
+    removeVenture (ventureIndex) {
+        this.ventures.splice(ventureIndex, 1);
+    }
+
     removeChecked (ventureIndex, taskIndex) {
         this.ventures[ventureIndex].tasks[taskIndex].checked = false;
     }

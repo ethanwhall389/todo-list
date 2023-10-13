@@ -6,6 +6,7 @@ const addTaskBttn = document.querySelector('#add-task-bttn');
 const listContainer = document.querySelector('#list-container');
 const deleteIcon = document.querySelector('.delete-icon');
 const ventureSelector = document.querySelector('.select-box');
+const ventureOptions = document.querySelector('.dynamic-options');
 const modalContainer = document.querySelector('.modal-container');
 const newVentureInput = document.querySelector('#venture-input-box');
 const addVentureBttn = document.querySelector('#add-venture-bttn');
@@ -18,7 +19,6 @@ export default class UI {
             List.setVentures(JSON.parse(localStorage.getItem('ventures')));
             UI.loadVenture(JSON.parse(localStorage.getItem('selectedVenture')));
         } else {
-            List.addVenture('Demo Venture');
             UI.addVenture('Demo Venture');
             UI.addTask('Wash clothes');
             UI.addTask('Take shower');
@@ -79,6 +79,14 @@ export default class UI {
     }
 
     static loadVentureList () {
+        ventureSelector.textContent = '';
+
+        const createVentureOption = document.createElement('option');
+        createVentureOption.value = 'Create New Venture';
+        createVentureOption.setAttribute('id', 'create-venture-option');
+        createVentureOption.textContent = '+ Create New Venture';
+        ventureSelector.appendChild(createVentureOption);
+
         const venturesArray = List.getVentures();
         venturesArray.forEach( (venture) => {
             const ventureName = venture.ventureName;
@@ -89,6 +97,8 @@ export default class UI {
             ventureSelector.appendChild(newOption);
 
         })
+
+        ventureSelector.value = currentSelectedVenture;
     }
 
     static getSelectedVentureIndex () {
@@ -110,10 +120,6 @@ export default class UI {
 
     static addVenture (ventureName) {
         List.addVenture(ventureName);
-        const newOption = document.createElement('option');
-        
-        UI.loadVentureList();
-
         UI.loadVenture(ventureName);
     }
 

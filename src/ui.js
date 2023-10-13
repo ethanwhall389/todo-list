@@ -12,6 +12,7 @@ const newVentureInput = document.querySelector('#venture-input-box');
 const addVentureBttn = document.querySelector('#add-venture-bttn');
 const deleteVentureBttn = document.querySelector('.delete-venture-bttn');
 const errorMessageContainer = document.querySelector('.error-message-container');
+const closeModalBttn = document.querySelector('.close-modal-bttn');
 
 let currentSelectedVenture;
 
@@ -157,6 +158,7 @@ export default class UI {
 
     static hideModal () {
         modalContainer.style.display = 'none';
+        taskInput.focus();
     }
 }
 
@@ -176,13 +178,6 @@ function addTask () {
 
 addTaskBttn.addEventListener('click', () => {
     addTask();
-})
-
-//Adding enter key function for adding tasks
-document.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        addTask();
-    }
 })
 
 //Deleting a task
@@ -216,6 +211,8 @@ ventureSelector.addEventListener('change', () => {
     if (ventureSelector.value === 'Create New Venture') {
         // const newVentureName = prompt("What would you like your venture called?");
         UI.displayModal();
+        newVentureInput.value = '';
+        newVentureInput.focus();
         ventureSelector.value = currentSelectedVenture;
     } else {
         UI.loadVenture(ventureSelector.value);
@@ -223,7 +220,6 @@ ventureSelector.addEventListener('change', () => {
 })
 
 addVentureBttn.addEventListener('click', () => {
-    console.log('add venture bttn clicked');
     if (newVentureInput.value !== '') {
         UI.addVenture(newVentureInput.value);
         UI.hideModal();
@@ -239,6 +235,39 @@ addVentureBttn.addEventListener('click', () => {
 
 // deleting a venture
 deleteVentureBttn.addEventListener('click', () => UI.deleteVenture());
+
+
+//handling the enter key press
+document.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        console.log('enter pressed');
+        if (modalContainer.style.display === 'none') {
+            addTask();
+        } else {
+            if (newVentureInput.value !== '') {
+                UI.addVenture(newVentureInput.value);
+                UI.hideModal();
+            } else {
+                return
+            }
+        }
+    }
+})
+
+//handling escape key 
+document.addEventListener ('keydown', (event) => {
+    if (event.key === 'Escape') {
+        if (modalContainer.style.display === 'block') {
+            UI.hideModal();
+        }
+        return;
+    }
+})
+
+
+closeModalBttn.addEventListener('click', () => {
+    UI.hideModal()
+});
 
 
 

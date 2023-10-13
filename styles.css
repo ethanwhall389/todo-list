@@ -28,6 +28,7 @@
     margin: 50px auto 20px;
     padding: 40px 30px 20px;
     border-radius: 10px;
+    overflow: auto;
 }
 
 .title-container {
@@ -263,6 +264,23 @@ li:hover::after {
     outline: none;
     padding: 10px;
     font-size: 15px;
+    border-radius: 30px;
+    transition: 110ms;
+}
+
+.delete-venture-bttn:hover {
+    background: #f25240;
+    color: #fff;
+}
+
+.error-message-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.error-message-container p {
+    margin-top: 10px;
+    color: #f25240;
 }
 
 .footer {

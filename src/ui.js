@@ -147,7 +147,7 @@ export default class UI {
             const lastVentureName = newVentureArray[lastIndex].ventureName;
             UI.loadVenture(lastVentureName);
         } else {
-            UI.showErrorMessage('You must have at least one venture.');
+            UI.showErrorMessage('You must have at least one venture');
             return;
         }
     } 
